@@ -38,8 +38,7 @@ public class King extends ChessPiece {
         directions.put("southwest", new Integer[]{1, -1});
         directions.put("southeast", new Integer[]{1, 1});
 
-        for (String direction : directions.keySet()
-        ) {
+        for (String direction : directions.keySet()) {
             directionToMove(p, mat, directions.get(direction));
         }
 
