@@ -4,10 +4,13 @@ import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.King;
+import chess.pieces.Pawn;
 import chess.pieces.Rook;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessMatch {
@@ -139,7 +142,9 @@ public class ChessMatch {
     }
 
     private ChessPiece king(Color color) {
-        List<Piece> list = piecesOnTheBoard.stream().filter(piece -> ((ChessPiece) piece).getColor() == color).collect(Collectors.toList());
+        List<Piece> list = piecesOnTheBoard.stream()
+                .filter(piece -> ((ChessPiece) piece).getColor() == color)
+                .collect(Collectors.toList());
         for (Piece p : list) {
             if (p instanceof King) {
                 return (ChessPiece) p;
@@ -155,7 +160,9 @@ public class ChessMatch {
 
     private boolean testCheck(Color color) {
         Position kingPosition = king(color).getChessPosition().toPosition();
-        List<Piece> opponentPieces = piecesOnTheBoard.stream().filter(piece -> ((ChessPiece) piece).getColor() == opponent(color)).collect(Collectors.toList());
+        List<Piece> opponentPieces = piecesOnTheBoard.stream()
+                .filter(piece -> ((ChessPiece) piece).getColor() == opponent(color))
+                .collect(Collectors.toList());
 
         for (Piece p : opponentPieces) {
             boolean[][] mat = p.possibleMoves();
@@ -172,7 +179,9 @@ public class ChessMatch {
             return false;
         }
 
-        List<Piece> currentPlayerPieces = piecesOnTheBoard.stream().filter(piece -> ((ChessPiece) piece).getColor() == color).collect(Collectors.toList());
+        List<Piece> currentPlayerPieces = piecesOnTheBoard.stream()
+                .filter(piece -> ((ChessPiece) piece).getColor() == color)
+                .collect(Collectors.toList());
 
         for (Piece p : currentPlayerPieces) {
             boolean[][] pieceMoves = p.possibleMoves();
@@ -189,21 +198,34 @@ public class ChessMatch {
 
                         if (!testCheck) {
                             return false;
+                        }
                     }
                 }
-            }
-                
+
             }
         }
         return true;
     }
 
     private void initialSetup() {
-        placeNewPiece('h', 7, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 1, new King(board, Color.WHITE));
+        Map<Color, Integer[]> colors = new HashMap<>();
+        colors.put(Color.WHITE, new Integer[]{1, 2});
+        colors.put(Color.BLACK, new Integer[]{8, 7});
 
-        placeNewPiece('b', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('a', 8, new King(board, Color.BLACK));
+        for (Color color : colors.keySet()) {
+            Integer rowOne = colors.get(color)[0];
+            Integer rowTwo = colors.get(color)[1];
+            placeNewPiece('a', rowOne, new Rook(board, color));
+            placeNewPiece('e', rowOne, new King(board, color));
+            placeNewPiece('h', rowOne, new Rook(board, color));
+            placeNewPiece('a', rowTwo, new Pawn(board, color));
+            placeNewPiece('b', rowTwo, new Pawn(board, color));
+            placeNewPiece('c', rowTwo, new Pawn(board, color));
+            placeNewPiece('d', rowTwo, new Pawn(board, color));
+            placeNewPiece('e', rowTwo, new Pawn(board, color));
+            placeNewPiece('f', rowTwo, new Pawn(board, color));
+            placeNewPiece('g', rowTwo, new Pawn(board, color));
+            placeNewPiece('h', rowTwo, new Pawn(board, color));
+        }
     }
 }
