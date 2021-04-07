@@ -3,10 +3,7 @@ package chess;
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
-import chess.pieces.Bishop;
-import chess.pieces.King;
-import chess.pieces.Pawn;
-import chess.pieces.Rook;
+import chess.pieces.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,11 +75,9 @@ public class ChessMatch {
             throw new ChessException("You can't put yourself in check");
         }
 
-        check = testCheck(opponent(currentPlayer)) ? true : false;
-
-        if (testCheck(opponent(currentPlayer))) {
-            checkMate = true;
-        } else {
+        check = testCheck(opponent(currentPlayer));
+        checkMate = testCheckMate(opponent(currentPlayer));
+        if (!checkMate) {
             nextTurn();
         }
 
@@ -217,9 +212,11 @@ public class ChessMatch {
             Integer rowOne = colors.get(color)[0];
             Integer rowTwo = colors.get(color)[1];
             placeNewPiece('a', rowOne, new Rook(board, color));
+            placeNewPiece('b', rowOne, new Knight(board, color));
             placeNewPiece('c', rowOne, new Bishop(board, color));
             placeNewPiece('e', rowOne, new King(board, color));
             placeNewPiece('f', rowOne, new Bishop(board, color));
+            placeNewPiece('g', rowOne, new Knight(board, color));
             placeNewPiece('h', rowOne, new Rook(board, color));
             placeNewPiece('a', rowTwo, new Pawn(board, color));
             placeNewPiece('b', rowTwo, new Pawn(board, color));
