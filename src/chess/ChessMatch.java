@@ -3,6 +3,7 @@ package chess;
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
+import chess.pieces.Bishop;
 import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Rook;
@@ -216,7 +217,9 @@ public class ChessMatch {
             Integer rowOne = colors.get(color)[0];
             Integer rowTwo = colors.get(color)[1];
             placeNewPiece('a', rowOne, new Rook(board, color));
+            placeNewPiece('c', rowOne, new Bishop(board, color));
             placeNewPiece('e', rowOne, new King(board, color));
+            placeNewPiece('f', rowOne, new Bishop(board, color));
             placeNewPiece('h', rowOne, new Rook(board, color));
             placeNewPiece('a', rowTwo, new Pawn(board, color));
             placeNewPiece('b', rowTwo, new Pawn(board, color));
