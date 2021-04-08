@@ -214,6 +214,7 @@ public class ChessMatch {
             placeNewPiece('a', rowOne, new Rook(board, color));
             placeNewPiece('b', rowOne, new Knight(board, color));
             placeNewPiece('c', rowOne, new Bishop(board, color));
+            placeNewPiece('d', rowOne, new Queen(board, color));
             placeNewPiece('e', rowOne, new King(board, color));
             placeNewPiece('f', rowOne, new Bishop(board, color));
             placeNewPiece('g', rowOne, new Knight(board, color));
